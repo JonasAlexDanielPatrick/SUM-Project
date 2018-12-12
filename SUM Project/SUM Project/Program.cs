@@ -12,6 +12,7 @@ namespace SUM_Project
 {
     public class Program
     {
+        // Test
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();
