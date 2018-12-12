@@ -13,6 +13,7 @@ namespace SUM_Project
     public class Program
     {
         // Test
+        // man is patter
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();
