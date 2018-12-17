@@ -15,14 +15,22 @@ namespace SUM_Project.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Medarbejder()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Projekter()
+        {
+            return View();
+        }
+
+        public IActionResult WebAPI()
+        {
+            return View();
+        }
+
+        public IActionResult Kontakt()
         {
             ViewData["Message"] = "Your contact page.";
 
