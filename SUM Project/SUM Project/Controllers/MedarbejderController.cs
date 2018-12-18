@@ -25,7 +25,7 @@ namespace SUM_Project.Controllers
             return View(await _context.MedarbejderModel.ToListAsync());
         }
 
-        // GET: Medarbejder/Details/5
+        // GET: Medarbejder/Details
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -50,8 +50,6 @@ namespace SUM_Project.Controllers
         }
 
         // POST: Medarbejder/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Navn,Tlf,Email,TimePris")] MedarbejderModel medarbejderModel)
@@ -65,7 +63,7 @@ namespace SUM_Project.Controllers
             return View(medarbejderModel);
         }
 
-        // GET: Medarbejder/Edit/5
+        // GET: Medarbejder/Edit
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,9 +79,7 @@ namespace SUM_Project.Controllers
             return View(medarbejderModel);
         }
 
-        // POST: Medarbejder/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Medarbejder/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Navn,Tlf,Email,TimePris")] MedarbejderModel medarbejderModel)
@@ -116,7 +112,7 @@ namespace SUM_Project.Controllers
             return View(medarbejderModel);
         }
 
-        // GET: Medarbejder/Delete/5
+        // GET: Medarbejder/Delete
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +130,7 @@ namespace SUM_Project.Controllers
             return View(medarbejderModel);
         }
 
-        // POST: Medarbejder/Delete/5
+        // POST: Medarbejder/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
