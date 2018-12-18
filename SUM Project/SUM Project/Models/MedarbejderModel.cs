@@ -9,18 +9,19 @@ namespace SUM_Project.Models
 {
     public class MedarbejderModel
     {
-        public int Id { get; set; }
+        [Key]
+        public int med_id { get; set; }
 
         [Display(Name = "Navn")]
-        public string Navn { get; set; }
+        public string navn { get; set; }
 
         [Display(Name = "Telefon")]
-        public string Tlf { get; set; }
+        public int tlf { get; set; }
 
         [Display(Name = "Email")]
-        public string Email { get; set; }
+        public string email { get; set; }
 
         [Display(Name = "Time Pris")]
-        public int TimePris { get; set; }
+        public double timepris { get; set; }
     }
 }
