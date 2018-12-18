@@ -52,7 +52,7 @@ namespace SUM_Project.Controllers
         // POST: Medarbejder/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Navn,Tlf,Email,TimePris")] MedarbejderModel medarbejderModel)
+        public async Task<IActionResult> Create([Bind("med_id,navn,tlf,email,timepris")] MedarbejderModel medarbejderModel)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace SUM_Project.Controllers
         // POST: Medarbejder/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Navn,Tlf,Email,TimePris")] MedarbejderModel medarbejderModel)
+        public async Task<IActionResult> Edit(int id, [Bind("med_id,navn,tlf,email,timepris")] MedarbejderModel medarbejderModel)
         {
             if (id != medarbejderModel.med_id)
             {
