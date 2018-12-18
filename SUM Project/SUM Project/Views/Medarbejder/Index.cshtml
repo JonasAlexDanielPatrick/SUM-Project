@@ -12,42 +12,45 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.navn)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.tlf)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.timepris)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.navn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tlf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.timepris)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.navn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tlf)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.timepris)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.med_id">Ændringer</a> |
-                <a asp-action="Details" asp-route-id="@item.med_id">Detaljer</a> |
-                <a asp-action="Delete" asp-route-id="@item.med_id">Slet</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.navn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tlf)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.timepris)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.med_id">Ændringer</a> |
+                    <a asp-action="Details" asp-route-id="@item.med_id">Detaljer</a> |
+                    <a asp-action="Delete" asp-route-id="@item.med_id">Slet</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@Html.ActionLink("Save Data", "SaveData", new { example = "TestID2" })
