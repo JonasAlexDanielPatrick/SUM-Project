@@ -1,27 +1,84 @@
 ﻿@model IEnumerable<SUM_Project.Models.TilbudModel>
+
 @{
-    ViewData["Title"] = "Projekter";
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<br />
+<h2>Index</h2>
 
-<table style="width:100%" class="table table-hover">
-    <tr>
-        <th>Titel</th>
-        <th>Pris</th>
-        <th>Projekt Ansvarlig</th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr onclick="window.location = 'Tilbud/Details';">
-            <td>@item.Titel</td>
-            <td>@item.Pris</td>
-            <td>@item.ProjektAnsvarlig</td>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.kunde_id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.titel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.beskrivelse)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.start_dato)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.slut_dato)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.rabat)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.pris)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.projekt_ansvarlig)
+                </th>
+            <th></th>
         </tr>
-    }
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.kunde_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.titel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.beskrivelse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.start_dato)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.slut_dato)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.rabat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pris)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.projekt_ansvarlig)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.tilbud_id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.tilbud_id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.tilbud_id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
 </table>
-
-
-
-

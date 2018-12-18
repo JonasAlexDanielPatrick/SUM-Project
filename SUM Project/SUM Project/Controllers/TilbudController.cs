@@ -1,67 +1,153 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using SUM_Project.Data;
+using SUM_Project.Models;
 
 namespace SUM_Project.Controllers
 {
     public class TilbudController : Controller
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        public TilbudController(ApplicationDbContext context)
         {
-            List<Models.TilbudModel> projekter = LavListe();
-            Debug.WriteLine("Blaaah");
-            return View(projekter);
+            _context = context;
         }
 
-        public IActionResult Details()
+        // GET: Tilbud
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Tilbud.ToListAsync());
+        }
+
+        // GET: Tilbud/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tilbudModel = await _context.Tilbud
+                .SingleOrDefaultAsync(m => m.tilbud_id == id);
+            if (tilbudModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(tilbudModel);
+        }
+
+        // GET: Tilbud/Create
+        public IActionResult Create()
         {
             return View();
         }
 
-        public static List<Models.TilbudModel> LavListe() 
+        // POST: Tilbud/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("tilbud_id,kunde_id,titel,beskrivelse,type,start_dato,slut_dato,rabat,pris,projekt_ansvarlig")] TilbudModel tilbudModel)
         {
-            List<Models.TilbudModel> tilbud = new List<Models.TilbudModel>();
-            ConnectionController.Open();
-            string sSQL = "SELECT * FROM Tilbud where projekt_ansvarlig > 0;";
-            SqlCommand command = new SqlCommand(sSQL, ConnectionController.conn);
-            SqlDataReader reader = null;
-            try
+            if (ModelState.IsValid)
             {
-                using (reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        tilbud.Add(new Models.TilbudModel {
-                            TilbudID = Convert.ToInt32(reader["tilbud_id"]),
-                            KundeID = Convert.ToInt32(reader["kunde_id"]),
-                            Titel = reader["title"].ToString(),
-                            Beskrivelse = reader["beskrivelse"].ToString(),
-                            Type = reader["type"].ToString(),
-                            StartDato = reader["start_dato"].ToString(),
-                            SlutDato = reader["slut_dato"].ToString(),
-                            Rabat = Convert.ToDouble(reader["rabat"]),
-                            Pris = Convert.ToDouble(reader["pris"]),
-                            ProjektAnsvarlig = Convert.ToInt32(reader["projekt_ansvarlig"]),
-                        });
+                _context.Add(tilbudModel);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(tilbudModel);
+        }
 
+        // GET: Tilbud/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tilbudModel = await _context.Tilbud.SingleOrDefaultAsync(m => m.tilbud_id == id);
+            if (tilbudModel == null)
+            {
+                return NotFound();
+            }
+            return View(tilbudModel);
+        }
+
+        // POST: Tilbud/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("tilbud_id,kunde_id,titel,beskrivelse,type,start_dato,slut_dato,rabat,pris,projekt_ansvarlig")] TilbudModel tilbudModel)
+        {
+            if (id != tilbudModel.tilbud_id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(tilbudModel);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TilbudModelExists(tilbudModel.tilbud_id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
                     }
                 }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(tilbudModel);
+        }
 
-            }
-            catch (Exception)
+        // GET: Tilbud/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
             {
-                Debug.WriteLine("Failed to connect to the database" + "\n");
+                return NotFound();
             }
-            finally
+
+            var tilbudModel = await _context.Tilbud
+                .SingleOrDefaultAsync(m => m.tilbud_id == id);
+            if (tilbudModel == null)
             {
-                reader.Close();
-                ConnectionController.Close();
+                return NotFound();
             }
-            return tilbud;
+
+            return View(tilbudModel);
+        }
+
+        // POST: Tilbud/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var tilbudModel = await _context.Tilbud.SingleOrDefaultAsync(m => m.tilbud_id == id);
+            _context.Tilbud.Remove(tilbudModel);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool TilbudModelExists(int id)
+        {
+            return _context.Tilbud.Any(e => e.tilbud_id == id);
         }
     }
 }
