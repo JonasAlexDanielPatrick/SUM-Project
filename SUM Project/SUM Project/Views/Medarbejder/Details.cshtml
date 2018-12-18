@@ -1,0 +1,42 @@
+﻿@model SUM_Project.Models.MedarbejderModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Detaljer på medarbejder</h2>
+
+<div>
+  
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Navn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Navn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tlf)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tlf)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TimePris)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TimePris)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Ændringer</a> |
+    <a asp-action="Index">Tilbage til liste</a>
+</div>
