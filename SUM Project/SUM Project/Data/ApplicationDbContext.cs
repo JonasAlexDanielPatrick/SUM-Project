@@ -23,6 +23,6 @@ namespace SUM_Project.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
-        public DbSet<SUM_Project.Models.MedarbejderModel> MedarbejderModel { get; set; }
+        public DbSet<SUM_Project.Models.MedarbejderModel> Medarbejder { get; set; }
     }
 }

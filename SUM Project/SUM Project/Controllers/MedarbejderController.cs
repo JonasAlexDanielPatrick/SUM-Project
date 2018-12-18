@@ -22,7 +22,7 @@ namespace SUM_Project.Controllers
         // GET: Medarbejder
         public async Task<IActionResult> Index()
         {
-            return View(await _context.MedarbejderModel.ToListAsync());
+            return View(await _context.Medarbejder.ToListAsync());
         }
 
         // GET: Medarbejder/Details
@@ -33,8 +33,8 @@ namespace SUM_Project.Controllers
                 return NotFound();
             }
 
-            var medarbejderModel = await _context.MedarbejderModel
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var medarbejderModel = await _context.Medarbejder
+                .SingleOrDefaultAsync(m => m.med_id == id);
             if (medarbejderModel == null)
             {
                 return NotFound();
@@ -71,7 +71,7 @@ namespace SUM_Project.Controllers
                 return NotFound();
             }
 
-            var medarbejderModel = await _context.MedarbejderModel.SingleOrDefaultAsync(m => m.Id == id);
+            var medarbejderModel = await _context.Medarbejder.SingleOrDefaultAsync(m => m.med_id == id);
             if (medarbejderModel == null)
             {
                 return NotFound();
@@ -84,7 +84,7 @@ namespace SUM_Project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Navn,Tlf,Email,TimePris")] MedarbejderModel medarbejderModel)
         {
-            if (id != medarbejderModel.Id)
+            if (id != medarbejderModel.med_id)
             {
                 return NotFound();
             }
@@ -98,7 +98,7 @@ namespace SUM_Project.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MedarbejderModelExists(medarbejderModel.Id))
+                    if (!MedarbejderModelExists(medarbejderModel.med_id))
                     {
                         return NotFound();
                     }
@@ -120,8 +120,8 @@ namespace SUM_Project.Controllers
                 return NotFound();
             }
 
-            var medarbejderModel = await _context.MedarbejderModel
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var medarbejderModel = await _context.Medarbejder
+                .SingleOrDefaultAsync(m => m.med_id == id);
             if (medarbejderModel == null)
             {
                 return NotFound();
@@ -135,15 +135,15 @@ namespace SUM_Project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var medarbejderModel = await _context.MedarbejderModel.SingleOrDefaultAsync(m => m.Id == id);
-            _context.MedarbejderModel.Remove(medarbejderModel);
+            var medarbejderModel = await _context.Medarbejder.SingleOrDefaultAsync(m => m.med_id == id);
+            _context.Medarbejder.Remove(medarbejderModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MedarbejderModelExists(int id)
         {
-            return _context.MedarbejderModel.Any(e => e.Id == id);
+            return _context.Medarbejder.Any(e => e.med_id == id);
         }
     }
 }
