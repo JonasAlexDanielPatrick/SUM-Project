@@ -1,5 +1,27 @@
-﻿@{
+﻿@model IEnumerable<SUM_Project.Models.TilbudModel>
+@{
     ViewData["Title"] = "Projekter";
 }
+
+<br />
+
+<table style="width:100%" class="table table-hover">
+    <tr>
+        <th>Titel</th>
+        <th>Pris</th>
+        <th>Projekt Ansvarlig</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr onclick="window.location = 'Tilbud/Details';">
+            <td>@item.Titel</td>
+            <td>@item.Pris</td>
+            <td>@item.ProjektAnsvarlig</td>
+        </tr>
+    }
+</table>
+
+
 
 

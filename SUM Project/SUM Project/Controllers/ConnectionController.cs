@@ -14,7 +14,7 @@ namespace SUM_Project.Controllers
 
         private static string strconn = "Server=den1.mssql8.gear.host;Database=sumproject;Uid=sumproject;Pwd=Wu6GN?66ar?f;";
 
-        private static SqlConnection conn = new SqlConnection(strconn);
+        public static SqlConnection conn = new SqlConnection(strconn);
 
         public static void Open()
         {
