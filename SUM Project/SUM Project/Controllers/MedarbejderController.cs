@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -153,6 +154,13 @@ namespace SUM_Project.Controllers
         {
 
             string output = JsonConvert.SerializeObject(_context.Medarbejder);
+
+            List<MedarbejderModel> medarbejdere = JsonConvert.DeserializeObject<List<MedarbejderModel>>(output);
+
+            foreach (var medarbejder in medarbejdere)
+            {
+                Debug.WriteLine("{0} - {1} - {2} - {3} - {4}", medarbejder.navn, medarbejder.med_id, medarbejder.tlf, medarbejder.email, medarbejder.timepris);
+            }
 
             //Build your stream
             var byteArray = Encoding.UTF8.GetBytes(output.ToArray());
