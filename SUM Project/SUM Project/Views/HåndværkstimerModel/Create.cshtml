@@ -1,25 +1,31 @@
 ﻿@model SUM_Project.Models.HåndværkstimerModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var id = Model.tilbud_id;
 }
 
-<h2>NAVN HER! FIX IT MAN!</h2>
-<div>
-    <a asp-action="Details/@id">Tilbage</a>
-</div>
+<h2>Create</h2>
+
+<h4>HåndværkstimerModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="tilbud_id" />
-            <input type="hidden" asp-for="med_id" />
+            <div class="form-group">
+                <label asp-for="tilbud_id" class="control-label"></label>
+                <input asp-for="tilbud_id" class="form-control" />
+                <span asp-validation-for="tilbud_id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="med_id" class="control-label"></label>
+                <input asp-for="med_id" class="form-control" />
+                <span asp-validation-for="med_id" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="antal" class="control-label"></label>
-                <input asp-for="antal" class="form-control" readonly/>
+                <input asp-for="antal" class="form-control" />
                 <span asp-validation-for="antal" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -29,13 +35,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="rabat" class="control-label"></label>
-                <input asp-for="rabat" class="form-control" readonly/>
+                <input asp-for="rabat" class="form-control" />
                 <span asp-validation-for="rabat" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Gem" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
     </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
 </div>
 

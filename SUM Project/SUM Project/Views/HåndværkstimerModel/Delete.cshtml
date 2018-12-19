@@ -1,0 +1,41 @@
+﻿@model SUM_Project.Models.HåndværkstimerModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>HåndværkstimerModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.antal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.antal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.brugt)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.brugt)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.rabat)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.rabat)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="tilbud_id" />
+        <input type="hidden" asp-for="med_id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

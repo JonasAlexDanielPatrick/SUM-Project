@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SUM_Project.Data;
 using SUM_Project.Models;
+using SUM_Project.ViewModels;
 
 namespace SUM_Project.Controllers
 {
@@ -40,45 +42,53 @@ namespace SUM_Project.Controllers
                 return NotFound();
             }
 
-            return View(tilbudModel);
-        }
-
-        // GET: Tilbud/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Tilbud/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("tilbud_id,kunde_id,titel,beskrivelse,type,start_dato,slut_dato,rabat,pris,projekt_ansvarlig")] TilbudModel tilbudModel)
-        {
-            if (ModelState.IsValid)
+            // Find alle håndværkstimer med samme tilbuds ID
+            List<HåndværkstimerViewModel> håndværkstimerVM = new List<HåndværkstimerViewModel>();
+            foreach (var item in _context.TilbudHåndværkstimer.ToList())
             {
-                _context.Add(tilbudModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if(item.tilbud_id == id)
+                {
+                    var håndværker = new HåndværkstimerViewModel
+                    {
+                        håndværkstimer = new HåndværkstimerModel
+                        {
+                            tilbud_id = item.tilbud_id,
+                            med_id = item.med_id,
+                            antal = item.antal,
+                            brugt = item.brugt,
+                            rabat = item.rabat
+                        }
+                    };
+                    foreach (var medarbejder in _context.Medarbejder)
+                    {
+                        if(medarbejder.med_id == item.med_id)
+                        {
+                            håndværker.navn = medarbejder.navn;
+
+                        }
+                    }
+                    håndværkstimerVM.Add(håndværker);
+                }
             }
-            return View(tilbudModel);
+
+            var vm = new TilbudDetailsViewModel
+            {
+                tilbud = tilbudModel,
+                håndværkstimervm = håndværkstimerVM,
+            };
+
+            return View(vm);
         }
 
-        // GET: Tilbud/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Tilbud/Edit/5/2
+        public async Task<IActionResult> Edit(int id1, int id2)
         {
-            if (id == null)
+            var håndværkstimerModel = await _context.TilbudHåndværkstimer.SingleOrDefaultAsync(m => m.tilbud_id == id1 && m.med_id == id2);
+            if (håndværkstimerModel == null)
             {
                 return NotFound();
             }
-
-            var tilbudModel = await _context.Tilbud.SingleOrDefaultAsync(m => m.tilbud_id == id);
-            if (tilbudModel == null)
-            {
-                return NotFound();
-            }
-            return View(tilbudModel);
+            return View(håndværkstimerModel);
         }
 
         // POST: Tilbud/Edit/5
@@ -86,23 +96,18 @@ namespace SUM_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("tilbud_id,kunde_id,titel,beskrivelse,type,start_dato,slut_dato,rabat,pris,projekt_ansvarlig")] TilbudModel tilbudModel)
+        public async Task<IActionResult> Edit(int id1, int id2, [Bind("tilbud_id,med_id,antal,brugt,rabat")] HåndværkstimerModel håndværkstimerModel)
         {
-            if (id != tilbudModel.tilbud_id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(tilbudModel);
+                    _context.Update(håndværkstimerModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TilbudModelExists(tilbudModel.tilbud_id))
+                    if (!HåndværkstimerModelExists(håndværkstimerModel.med_id))
                     {
                         return NotFound();
                     }
@@ -111,38 +116,14 @@ namespace SUM_Project.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new { id = håndværkstimerModel.tilbud_id });
             }
-            return View(tilbudModel);
+            return View(håndværkstimerModel);
         }
 
-        // GET: Tilbud/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        private bool HåndværkstimerModelExists(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tilbudModel = await _context.Tilbud
-                .SingleOrDefaultAsync(m => m.tilbud_id == id);
-            if (tilbudModel == null)
-            {
-                return NotFound();
-            }
-
-            return View(tilbudModel);
-        }
-
-        // POST: Tilbud/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var tilbudModel = await _context.Tilbud.SingleOrDefaultAsync(m => m.tilbud_id == id);
-            _context.Tilbud.Remove(tilbudModel);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return _context.TilbudHåndværkstimer.Any(e => e.tilbud_id == id);
         }
 
         private bool TilbudModelExists(int id)

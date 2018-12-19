@@ -1,73 +1,121 @@
-﻿@model SUM_Project.Models.TilbudModel
+﻿@model SUM_Project.ViewModels.TilbudDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";    
 }
 
-<h2>Details</h2>
+<h2>@Html.DisplayFor(model => model.tilbud.titel)</h2>
+<div>
+    <a asp-action="Index">Tilbage</a>
+</div>
 
 <div>
-    <h4>TilbudModel</h4>
     <hr />
+    <h4>Detaljer</h4>
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.kunde_id)
+            @Html.DisplayNameFor(model => model.tilbud.kunde_id)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.kunde_id)
+            @Html.DisplayFor(model => model.tilbud.kunde_id)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.titel)
+            @Html.DisplayNameFor(model => model.tilbud.beskrivelse)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.titel)
+            @Html.DisplayFor(model => model.tilbud.beskrivelse)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.beskrivelse)
+            @Html.DisplayNameFor(model => model.tilbud.type)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.beskrivelse)
+            @Html.DisplayFor(model => model.tilbud.type)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.type)
+            @Html.DisplayNameFor(model => model.tilbud.start_dato)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.type)
+            @Html.DisplayFor(model => model.tilbud.start_dato)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.start_dato)
+            @Html.DisplayNameFor(model => model.tilbud.slut_dato)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.start_dato)
+            @Html.DisplayFor(model => model.tilbud.slut_dato)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.slut_dato)
+            @Html.DisplayNameFor(model => model.tilbud.rabat)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.slut_dato)
+            @Html.DisplayFor(model => model.tilbud.rabat)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.rabat)
+            @Html.DisplayNameFor(model => model.tilbud.pris)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.rabat)
+            @Html.DisplayFor(model => model.tilbud.pris)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.pris)
+            @Html.DisplayNameFor(model => model.tilbud.projekt_ansvarlig)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.pris)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.projekt_ansvarlig)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.projekt_ansvarlig)
+            @Html.DisplayFor(model => model.tilbud.projekt_ansvarlig)
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.tilbud_id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<hr />
+<h4>Håndværkere</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.håndværkstimervm[0].navn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.håndværkstimervm[0].håndværkstimer.antal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.håndværkstimervm[0].håndværkstimer.brugt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.håndværkstimervm[0].håndværkstimer.rabat)
+            </th>
+            <th>
+                
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.håndværkstimervm)
+        {           
+            var path = item.håndværkstimer.tilbud_id + "/" + item.håndværkstimer.med_id;
+            
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.navn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.håndværkstimer.antal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.håndværkstimer.brugt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.håndværkstimer.rabat)
+                </td>
+                <td>
+                    <div class="">
+                        <a asp-action="Edit" asp-route-id="@path">Ret Timer</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

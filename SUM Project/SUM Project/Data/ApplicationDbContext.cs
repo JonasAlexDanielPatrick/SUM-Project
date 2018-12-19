@@ -21,10 +21,14 @@ namespace SUM_Project.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+            builder.Entity<HåndværkstimerModel>().HasKey(c => new { c.tilbud_id, c.med_id });
         }
 
         public DbSet<SUM_Project.Models.MedarbejderModel> Medarbejder { get; set; }
 
         public DbSet<SUM_Project.Models.TilbudModel> Tilbud { get; set; }
+
+        public DbSet<SUM_Project.Models.HåndværkstimerModel> TilbudHåndværkstimer { get; set; }
+
     }
 }

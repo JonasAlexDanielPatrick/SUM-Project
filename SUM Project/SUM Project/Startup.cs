@@ -62,6 +62,13 @@ namespace SUM_Project
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                // New code to handle requests like '/Users/1/BuyProduct/2'
+                routes.MapRoute(
+                    // Name of the new route, we'll need it later to generate URLs in the templates
+                    name: "twoids",
+                    // Route pattern
+                    template: "{controller=Home}/{action=Index}/{id1}/{id2}");
             });
         }
     }

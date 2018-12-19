@@ -179,6 +179,25 @@ namespace SUM_Project.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("SUM_Project.Models.HåndværkstimerModel", b =>
+                {
+                    b.Property<int>("tilbud_id");
+
+                    b.Property<int>("med_id");
+
+                    b.Property<int>("antal");
+
+                    b.Property<int>("brugt");
+
+                    b.Property<string>("medarbejderNavn");
+
+                    b.Property<double>("rabat");
+
+                    b.HasKey("tilbud_id", "med_id");
+
+                    b.ToTable("TilbudHåndværkstimer");
+                });
+
             modelBuilder.Entity("SUM_Project.Models.MedarbejderModel", b =>
                 {
                     b.Property<int>("med_id")
