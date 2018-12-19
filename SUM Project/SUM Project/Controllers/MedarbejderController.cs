@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using SUM_Project.Data;
 using SUM_Project.Models;
 
@@ -150,11 +151,16 @@ namespace SUM_Project.Controllers
 
         public FileStreamResult SaveData(string example)
         {
-            
+
+            string output = JsonConvert.SerializeObject(_context.Medarbejder);
 
             //Build your stream
-            var byteArray = Encoding.ASCII.GetBytes(example);
+            var byteArray = Encoding.UTF8.GetBytes(output.ToArray());
+            
+
             var stream = new MemoryStream(byteArray);
+
+
 
             //Returns a file that will match your value passed in (ie TestID2.txt)
             return File(stream, "text/plain", String.Format("{0}.txt", example));
