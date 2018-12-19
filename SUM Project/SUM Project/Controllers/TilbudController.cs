@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using SUM_Project.Data;
 using SUM_Project.Models;
@@ -22,12 +22,14 @@ namespace SUM_Project.Controllers
         }
 
         // GET: Tilbud
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Tilbud.ToListAsync());
         }
 
         // GET: Tilbud/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -81,6 +83,7 @@ namespace SUM_Project.Controllers
         }
 
         // GET: Tilbud/Edit/5/2
+        [Authorize]
         public async Task<IActionResult> Edit(int id1, int id2)
         {
             var håndværkstimerModel = await _context.TilbudHåndværkstimer.SingleOrDefaultAsync(m => m.tilbud_id == id1 && m.med_id == id2);
@@ -88,12 +91,14 @@ namespace SUM_Project.Controllers
             {
                 return NotFound();
             }
+
             return View(håndværkstimerModel);
         }
 
         // POST: Tilbud/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id1, int id2, [Bind("tilbud_id,med_id,antal,brugt,rabat")] HåndværkstimerModel håndværkstimerModel)
@@ -107,8 +112,9 @@ namespace SUM_Project.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HåndværkstimerModelExists(håndværkstimerModel.med_id))
+                    if (!HåndværkstimerModelExists(håndværkstimerModel.tilbud_id))
                     {
+                        Debug.WriteLine("NOT FOUND!" + håndværkstimerModel.tilbud_id);
                         return NotFound();
                     }
                     else
@@ -118,6 +124,7 @@ namespace SUM_Project.Controllers
                 }
                 return RedirectToAction("Details", new { id = håndværkstimerModel.tilbud_id });
             }
+            Debug.WriteLine("ERROR!" + håndværkstimerModel.med_id);
             return View(håndværkstimerModel);
         }
 

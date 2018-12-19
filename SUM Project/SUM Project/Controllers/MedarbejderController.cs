@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SUM_Project.Data;
@@ -24,12 +24,14 @@ namespace SUM_Project.Controllers
         }
 
         // GET: Medarbejder
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Medarbejder.ToListAsync());
         }
 
         // GET: Medarbejder/Details
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -48,12 +50,14 @@ namespace SUM_Project.Controllers
         }
 
         // GET: Medarbejder/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Medarbejder/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("med_id,navn,tlf,email,timepris")] MedarbejderModel medarbejderModel)
@@ -68,6 +72,7 @@ namespace SUM_Project.Controllers
         }
 
         // GET: Medarbejder/Edit
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,6 +89,7 @@ namespace SUM_Project.Controllers
         }
 
         // POST: Medarbejder/Edit
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("med_id,navn,tlf,email,timepris")] MedarbejderModel medarbejderModel)
@@ -117,6 +123,7 @@ namespace SUM_Project.Controllers
         }
 
         // GET: Medarbejder/Delete
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,6 +142,7 @@ namespace SUM_Project.Controllers
         }
 
         // POST: Medarbejder/Delete
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
