@@ -5,13 +5,72 @@
 <h3>@ViewData["Message"]</h3>
 
 <address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
+    Raunstrup A/S<br />
+    Karetmagervej 10B<br />
+    7100 Vejle<br />
+    <abbr title="Raunstrup A/S Telefonnummer">Tlf:</abbr>
+    <u>87 120 120</u>
 </address>
 
 <address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+    <strong>Velkommen til kontaktsiden!</strong><br />
+    Udfyld venligst kontaktformularen og vi vil vende tilbage hurtigst muligt.<br />
+    MvH Raunstrup A/S<br />
+</address>
+
+<form action="mailto:Raunstrup@Support.com" method="post" enctype="text/plain" accept-charset="UTF-8">
+    <table width="450">
+        <tr>
+            <td valign="top">
+                <label for="navn">Navn *</label>
+            </td>
+            <td valign="top">
+                <input type="text" name="navn" maxlength="20" size="30">
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                <label for="efternavn">Efternavn *</label>
+            </td>
+            <td valign="top">
+                <input type="text" name="efternavn" maxlength="20" size="30">
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                <label for="t-mail">E-mail *</label>
+            </td>
+            <td valign="top">
+                <input type="text" name="t-mail" maxlength="50" size="30">
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                <label for="telefon Nummer">Telefon Nummer *</label>
+            </td>
+            <td valign="top">
+                <input type="text" name="telefon Nummer" maxlength="8" size="30">
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                <label for="besked">Besked *</label>
+            </td>
+            <td valign="top">
+                <textarea name="besked" maxlength="500" cols="40" rows="6" style="resize:none"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <input type="submit" value="Send">
+                <input type="reset" value="Ryd Formular">
+            </td>
+        </tr>
+    </table>
+</form>
+
+<address>
+    <br />
+    Problemer med formularen? Send os en mail eller kontakt os på: <strong>87 120 120</strong><br />
+    <strong>Raunstrup@support.com</strong><br />
 </address>
