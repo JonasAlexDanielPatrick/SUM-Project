@@ -1,13 +1,13 @@
 ﻿@model SUM_Project.Models.MedarbejderModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Details";
 }
 
-<h2>Slet medarbejder</h2>
+<h2>Detaljer på medarbejder</h2>
 
-<h3>Er du sikker på at du vil slette?</h3>
 <div>
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -35,10 +35,7 @@
             @Html.DisplayFor(model => model.timepris)
         </dd>
     </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="med_id" />
-        <input type="submit" value="Slet" class="btn btn-default" /> |
-        <a asp-action="Index">Tilbage til liste</a>
-    </form>
+</div>
+<div>
+    <a asp-action="Index">Tilbage til liste</a>
 </div>

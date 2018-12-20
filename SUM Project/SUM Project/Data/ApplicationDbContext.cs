@@ -26,6 +26,7 @@ namespace SUM_Project.Data
 
         public DbSet<SUM_Project.Models.MedarbejderModel> Medarbejder { get; set; }
 
+
         public DbSet<SUM_Project.Models.TilbudModel> Tilbud { get; set; }
 
         public DbSet<SUM_Project.Models.HåndværkstimerModel> TilbudHåndværkstimer { get; set; }
