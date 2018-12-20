@@ -1,0 +1,42 @@
+﻿@model SUM_Project.Models.HåndværkstimerModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var id = Model.tilbud_id;
+    var max = Model.antal;
+}
+
+<h2>Ret Timer</h2>
+<div>
+    <a asp-action="Details/@id">Tilbage</a>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Timer">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="tilbud_id" />
+            <input type="hidden" asp-for="med_id" />
+            <div class="form-group">
+                <label asp-for="antal" class="control-label"></label>
+                <input asp-for="antal" class="form-control" readonly/>
+                <span asp-validation-for="antal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="brugt" class="control-label"></label>
+                <input asp-for="brugt" class="form-control" max="@max" />
+                <span asp-validation-for="brugt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="rabat" class="control-label"></label>
+                <input asp-for="rabat" class="form-control" readonly/>
+                <span asp-validation-for="rabat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Gem" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+

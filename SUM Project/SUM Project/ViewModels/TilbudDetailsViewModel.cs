@@ -7,5 +7,6 @@ namespace SUM_Project.ViewModels
     {
         public TilbudModel tilbud { get; set; }
         public List<HåndværkstimerViewModel> håndværkstimervm { get; set; }
+        public List<MaterialeforbrugViewModel> forbrugvm { get; set; }
     }
 }

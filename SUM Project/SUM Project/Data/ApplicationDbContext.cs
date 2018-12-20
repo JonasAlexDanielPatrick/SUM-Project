@@ -22,6 +22,7 @@ namespace SUM_Project.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
             builder.Entity<HåndværkstimerModel>().HasKey(c => new { c.tilbud_id, c.med_id });
+            builder.Entity<MaterialeforbrugModel>().HasKey(c => new { c.tilbud_id, c.mat_id });
         }
 
         public DbSet<SUM_Project.Models.MedarbejderModel> Medarbejder { get; set; }
@@ -30,6 +31,9 @@ namespace SUM_Project.Data
         public DbSet<SUM_Project.Models.TilbudModel> Tilbud { get; set; }
 
         public DbSet<SUM_Project.Models.HåndværkstimerModel> TilbudHåndværkstimer { get; set; }
+
+        public DbSet<SUM_Project.Models.MaterialerModel> Materialer { get; set; }
+        public DbSet<SUM_Project.Models.MaterialeforbrugModel> Materialeforbrug { get; set; }
 
     }
 }

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SUM_Project.Models.MaterialerModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Liste over materialer</h2>
+
+<p>
+    <a asp-action="Create">Opret ny</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.navn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.indkøbspris)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.salgspris)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.navn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.indkøbspris)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.salgspris)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

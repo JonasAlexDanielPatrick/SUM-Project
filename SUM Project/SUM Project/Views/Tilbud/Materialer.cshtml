@@ -1,23 +1,23 @@
-﻿@model SUM_Project.Models.HåndværkstimerModel
+﻿@model SUM_Project.Models.MaterialeforbrugModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Materialer";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var id = Model.tilbud_id;
     var max = Model.antal;
 }
 
-<h2>Ret Timer</h2>
+<h2>Ret Materialer</h2>
 <div>
     <a asp-action="Details/@id">Tilbage</a>
 </div>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Materialer">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="tilbud_id" />
-            <input type="hidden" asp-for="med_id" />
+            <input type="hidden" asp-for="mat_id" />
             <div class="form-group">
                 <label asp-for="antal" class="control-label"></label>
                 <input asp-for="antal" class="form-control" readonly/>

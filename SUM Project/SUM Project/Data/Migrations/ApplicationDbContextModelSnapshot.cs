@@ -189,13 +189,44 @@ namespace SUM_Project.Data.Migrations
 
                     b.Property<int>("brugt");
 
-                    b.Property<string>("medarbejderNavn");
-
                     b.Property<double>("rabat");
 
                     b.HasKey("tilbud_id", "med_id");
 
                     b.ToTable("TilbudHåndværkstimer");
+                });
+
+            modelBuilder.Entity("SUM_Project.Models.MaterialeforbrugModel", b =>
+                {
+                    b.Property<int>("tilbud_id");
+
+                    b.Property<int>("mat_id");
+
+                    b.Property<int>("antal");
+
+                    b.Property<int>("brugt");
+
+                    b.Property<double>("rabat");
+
+                    b.HasKey("tilbud_id", "mat_id");
+
+                    b.ToTable("Materialeforbrug");
+                });
+
+            modelBuilder.Entity("SUM_Project.Models.MaterialerModel", b =>
+                {
+                    b.Property<int>("mat_id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<double>("indkøbspris");
+
+                    b.Property<string>("navn");
+
+                    b.Property<double>("salgspris");
+
+                    b.HasKey("mat_id");
+
+                    b.ToTable("Materialer");
                 });
 
             modelBuilder.Entity("SUM_Project.Models.MedarbejderModel", b =>

@@ -73,18 +73,48 @@ namespace SUM_Project.Controllers
                 }
             }
 
+            // Find alle materialer med samme tilbuds ID
+            List<MaterialeforbrugViewModel> materialeforbrugVM = new List<MaterialeforbrugViewModel>();
+            foreach (var item in _context.Materialeforbrug.ToList())
+            {
+                if (item.tilbud_id == id)
+                {
+                    var materiale = new MaterialeforbrugViewModel
+                    {
+                        forbrug = new MaterialeforbrugModel
+                        {
+                            tilbud_id = item.tilbud_id,
+                            mat_id = item.mat_id,
+                            antal = item.antal,
+                            brugt = item.brugt,
+                            rabat = item.rabat
+                        }
+                    };
+                    foreach (var mat in _context.Materialer)
+                    {
+                        if (mat.mat_id == item.mat_id)
+                        {
+                            materiale.navn = mat.navn;
+
+                        }
+                    }
+                    materialeforbrugVM.Add(materiale);
+                }
+            }
+
             var vm = new TilbudDetailsViewModel
             {
                 tilbud = tilbudModel,
                 håndværkstimervm = håndværkstimerVM,
+                forbrugvm = materialeforbrugVM
             };
 
             return View(vm);
         }
 
-        // GET: Tilbud/Edit/5/2
+        // GET: Tilbud/Timer/5/2
         [Authorize]
-        public async Task<IActionResult> Edit(int id1, int id2)
+        public async Task<IActionResult> Timer(int id1, int id2)
         {
             var håndværkstimerModel = await _context.TilbudHåndværkstimer.SingleOrDefaultAsync(m => m.tilbud_id == id1 && m.med_id == id2);
             if (håndværkstimerModel == null)
@@ -95,13 +125,27 @@ namespace SUM_Project.Controllers
             return View(håndværkstimerModel);
         }
 
-        // POST: Tilbud/Edit/5
+        // GET: Tilbud/Materialer/5/2
+        [Authorize]
+        public async Task<IActionResult> Materialer(int id1, int id2)
+        {
+            var materialeforbrugModel = await _context.Materialeforbrug.SingleOrDefaultAsync(m => m.tilbud_id == id1 && m.mat_id == id2);
+            if (materialeforbrugModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(materialeforbrugModel);
+        }
+
+
+        // POST: Tilbud/Timer/5/2
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id1, int id2, [Bind("tilbud_id,med_id,antal,brugt,rabat")] HåndværkstimerModel håndværkstimerModel)
+        public async Task<IActionResult> Timer(int id1, int id2, [Bind("tilbud_id,med_id,antal,brugt,rabat")] HåndværkstimerModel håndværkstimerModel)
         {
             if (ModelState.IsValid)
             {
@@ -128,9 +172,48 @@ namespace SUM_Project.Controllers
             return View(håndværkstimerModel);
         }
 
+        // POST: Tilbud/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Materialer(int id1, int id2, [Bind("tilbud_id,mat_id,antal,brugt,rabat")] MaterialeforbrugModel materialeforbrugModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(materialeforbrugModel);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!MaterialeforbrugModelExists(materialeforbrugModel.tilbud_id))
+                    {
+                        Debug.WriteLine("NOT FOUND!" + materialeforbrugModel.tilbud_id);
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Details", new { id = materialeforbrugModel.tilbud_id });
+            }
+            Debug.WriteLine("ERROR!" + materialeforbrugModel.mat_id);
+            return View(materialeforbrugModel);
+        }
+
+
         private bool HåndværkstimerModelExists(int id)
         {
             return _context.TilbudHåndværkstimer.Any(e => e.tilbud_id == id);
+        }
+
+        private bool MaterialeforbrugModelExists(int id)
+        {
+            return _context.Materialeforbrug.Any(e => e.tilbud_id == id);
         }
 
         private bool TilbudModelExists(int id)
