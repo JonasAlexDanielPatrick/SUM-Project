@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SUM_Project.Models
 {
     public class MaterialerModel
     {
+        [Display(Name = "Materiale ID")]
+        public int mat_id { get; set; }
+        [Display(Name = "Navn")]
+        public string navn { get; set; }
+        [Display(Name = "Indkøbs Pris")]
+        public double indkøbspris { get; set; }
+        [Display(Name = "Salgs Pris")]
+        public double salgspris { get; set; }
 
     }
 }
+

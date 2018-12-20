@@ -4,6 +4,7 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var id = Model.tilbud_id;
+    var max = Model.antal;
 }
 
 <h2>Ret Timer</h2>
@@ -24,7 +25,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="brugt" class="control-label"></label>
-                <input asp-for="brugt" class="form-control" />
+                <input asp-for="brugt" class="form-control" max="@max" />
                 <span asp-validation-for="brugt" class="text-danger"></span>
             </div>
             <div class="form-group">
