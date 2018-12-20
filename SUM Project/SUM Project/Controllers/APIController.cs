@@ -7,8 +7,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using SUM_Project.Models;
 using SUM_Project.Data;
-
-
+using System.Diagnostics;
 
 namespace SUM_Project.Controllers
 {
@@ -20,86 +19,64 @@ namespace SUM_Project.Controllers
         {
             _context = context;
         }
-        //public IActionResult Indexold()
-        //{
-        //    return View();
-        //}
+       
 
-        // Kilde: https://medium.com/@mwolfhoffman/making-api-requests-with-asp-net-core-1af8a9ffbc7
-        //public static async void Index()
-        //{
-        //    //We will make a GET request to a really cool website...
+        string baseUrl = "http://sumprojekt-api.gear.host/api/medarbejder";
 
-        //    //string baseUrl = "http://mwolfhoffman.com";
-
-        //    string baseUrl = "https://localhost:44303/api/medarbejder";
-            
-
-        //    //The 'using' will help to prevent memory leaks.
-
-        //    //Create a new instance of HttpClient
-        //    using (HttpClient client = new HttpClient())
-
-        //    //Setting up the response...         
-
-        //    using (HttpResponseMessage res = await client.GetAsync(baseUrl))
-        //    using (HttpContent content = res.Content)
-        //    {
-        //        string data = await content.ReadAsStringAsync();
-        //        if (data != null)
-        //        {
-        //            Console.WriteLine(data);
-        //            return View(data);
-        //            //return View(await _context.Medarbejder.ToListAsync());
-
-        //        }
-
-        //    }
-        //}
-
-        // kilde https://stackoverflow.com/questions/29699884/calling-web-api-from-mvc-controller
-        // GET: Products
         public async Task<ActionResult> Index()
         {
-            string apiUrl = "https://localhost:44303/api/medarbejder";
+
+            List<MedarbejderModel> table = new List<MedarbejderModel>();
 
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiUrl);
+                client.BaseAddress = new Uri(baseUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                HttpResponseMessage response = await client.GetAsync(baseUrl);
                 if (response.IsSuccessStatusCode)
                 {
                     var data = await response.Content.ReadAsStringAsync();
-
-                    var table = JsonConvert.DeserializeObject<IEnumerable<APIModel>>(data);
-                    //var table = JsonConvert.DeserializeObject<System.Data.DataTable>(data);
+                    
+                    table = JsonConvert.DeserializeObject<List<MedarbejderModel>>(data);
 
                 }
 
 
             }
-            return View();
+            return View(table);
 
         }
 
-        //// GET: Medarbejder/Details
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<ActionResult> Details(int? id)
+        {
+            string url = baseUrl + "/" + id;
 
-        //    var medarbejderModel = await _context.Medarbejder
-        //        .SingleOrDefaultAsync(m => m.med_id == id);
-        //    if (medarbejderModel == null)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    return View(medarbejderModel);
+            MedarbejderModel medarbejder = new MedarbejderModel();
+
+            using (HttpClient client = new HttpClient())
+            {
+                
+                client.BaseAddress = new Uri(url);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = await response.Content.ReadAsStringAsync();
+
+                    medarbejder = JsonConvert.DeserializeObject<MedarbejderModel>(data);
+
+                    Debug.WriteLine(medarbejder.navn + " " + medarbejder.med_id);
+                }
+
+
+            }
+            return View(medarbejder);
+
         }
     }
+}

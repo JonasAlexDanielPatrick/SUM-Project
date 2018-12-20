@@ -1,0 +1,41 @@
+﻿@model SUM_Project.Models.MedarbejderModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Detaljer på medarbejder</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.navn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.navn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.tlf)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.tlf)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.timepris)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.timepris)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Tilbage til liste</a>
+</div>
