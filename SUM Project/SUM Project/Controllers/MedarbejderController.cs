@@ -158,32 +158,25 @@ namespace SUM_Project.Controllers
         }
 
         public FileStreamResult SaveData(string example)
-        {
-            //tier 1 Jonas Code.
+        {            
             string output = JsonConvert.SerializeObject(_context.Medarbejder);
 
             List<MedarbejderModel> medarbejdere = JsonConvert.DeserializeObject<List<MedarbejderModel>>(output);
  
-            //Tier Godlike patter code.
             MemoryStream stream = new MemoryStream();
 
-            //wut
             TextWriter tw = new StreamWriter(stream);
 
             foreach (var medarbejder in medarbejdere)
             {
                 tw.WriteLine("{0} - {1} - {2} - {3} - {4}", medarbejder.navn, medarbejder.med_id, medarbejder.tlf, medarbejder.email, medarbejder.timepris);
             }
-            //????????????????????????????????
+
             tw.Flush();
 
-            //the fuuuck????
             byte[] bytes = stream.ToArray();
             stream = new MemoryStream(bytes);
 
-
-            //shit works yo
-            //Its yo boiii
             return File(stream, "text/plain", String.Format("{0}.txt", example));
         }
     }
